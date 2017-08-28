@@ -15,6 +15,13 @@ import threading
 
 country_retailers_pickle_path = '/usr/src/app/web/static/country_retailers.p'
 
+app = Flask(__name__)
+
+cache = redis.StrictRedis(
+    host = "10.148.0.4",
+    port = "6379",
+)
+
 def f():
     try:
         country_retailers = pickle.load(open(country_retailers_pickle_path, "rb"))
@@ -48,14 +55,8 @@ def f():
     pickle.dump(country_retailers, open(country_retailers_pickle_path, "wb" ))  
     time.sleep(20)        
     threading.Timer(60, f).start()
+    
 f()
-app = Flask(__name__)
-
-cache = redis.StrictRedis(
-    host = "10.148.0.4",
-    port = "6379",
-)
-
 
 def help_decorator(f):
     """
