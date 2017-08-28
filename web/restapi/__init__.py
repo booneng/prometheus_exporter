@@ -49,13 +49,18 @@ def times():
         country_retailers = pickle.load(open(country_retailers_pickle_path, "rb"))
     except (OSError, IOError) as e:
         country_retailers = {}
-    start_time = country_retailers['start_time']
-    stop_time = country_retailers['stop_time']
-    data = {}
-    data['date'] = str(start_time.date())
-    data['start_time'] = str(start_time.time())
-    if stop_time:
-        data['stop_time'] = str(stop_time.time())
-        data['duration'] = str(stop_time - start_time)
+    data = []
+    for cr_key in country_retailers:
+        country_retailer = country_retailers[cr_key]
+        start_time = country_retailer['start_time']
+        stop_time = country_retailer['stop_time']
+        cr_data = {}   
+        cr_data['key'] = cr_key
+        cr_data['date'] = str(start_time.date())
+        cr_data['start_time'] = str(start_time.time())
+        if stop_time:
+            cr_data['stop_time'] = str(stop_time.time())
+            cr_data['duration'] = str(stop_time - start_time)
+        data.append(cr_data)
     
     return render_template('index.html', **locals())
