@@ -8,6 +8,9 @@ from flask import Markup
 import markdown
 from flask import render_template
 import redis
+import atexit
+from apscheduler.scheduler import Scheduler
+import datetime
 
 app = Flask(__name__)
 
@@ -17,6 +20,14 @@ cache = redis.StrictRedis(
 )
 
 country_retailers = {}
+
+cron = Scheduler(daemon=True)
+# Explicitly kick off the background thread
+cron.start()
+
+@cron.interval_schedule(hours=1)
+def refresh_counters():
+    pass
 
 def help_decorator(f):
     """
@@ -33,8 +44,9 @@ app.debug = True
 
 @app.route('/')
 def index():
-    f = open("README.md","r")
-    content = Markup(markdown.markdown(f.read()))
+    #f = open("README.md","r")
+    #content = Markup(markdown.markdown(f.read()))
+    country_retailers = {'hi':'hi'}
     return render_template('index.html', **locals())
 
 
@@ -43,7 +55,30 @@ def index():
 def times():
     scrapper_keys = cache.keys('Counter/Scrapper*Total')
     for key in scrapper_keys:
+        data = {}
         country_retailer = re.findall(r'Counter/Scrapper(.*?)/Total', str(key))[0]
         count = int(cache.get(key))
-        country_retailers[country_retailer] = count
+        current_time = datetime.datetime.now()
+        data['count'] = count
+        if country_retailer not in country_retailers:
+            data['start_time'] = current_time
+            data['count'] = count
+            data['stop_time'] = None
+            country_retailers[country_retailer] = data
+            continue
+        old_data = country_retailers[country_retailer]
+        old_count = old_data['count']
+        old_start_time = old_data['start_time']
+        old_stop_time = old_data['stop_time']
+        if count < old_count:
+            data['start_time'] = current_time
+            data['stop_time'] = None
+        elif old_stop_time == None:
+            if count == old_count:
+                data['start_time'] = old_start_time
+                data['stop_time'] = current_time
+        country_retailers[country_retailer] = data
+        
+        for country_retailer in country_retailers:
+            pass
     return jsonify(country_retailers)
