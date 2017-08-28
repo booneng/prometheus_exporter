@@ -19,5 +19,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the source code into the container
 COPY . /usr/src/app/web
-
+CMD ["python", "/usr/src/app/web/restapi/refresh_data.py"]
 

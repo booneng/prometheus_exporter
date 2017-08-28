@@ -45,7 +45,7 @@ def index():
 @app.route('/times'
            '')
 def times():
-    country_retailers_pickle_path = '/home/booneng/prometheus_exporter/country_retailers.p'    
+    country_retailers_pickle_path = '/usr/src/app/web/static/country_retailers.p'    
     try:
         country_retailers = pickle.load(open(country_retailers_pickle_path, "rb"))
     except (OSError, IOError) as e:
