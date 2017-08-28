@@ -49,12 +49,13 @@ def times():
     try:
         country_retailers = pickle.load(open(country_retailers_pickle_path, "rb"))
     except (OSError, IOError) as e:
-        country_retailers = {'test':{'start_time': datetime.datetime.now()}}
+        country_retailers = {'test':{'start_time': datetime.datetime.now(), 'error': e}}
     data = []
     for cr_key in country_retailers:
         country_retailer = country_retailers[cr_key]
         start_time = country_retailer['start_time']
-        stop_time = country_retailer['stop_time']
+        stop_time = country_retailer.get('stop_time', None)
+        error = country_retailer.get('error', None)
         cr_data = {}   
         cr_data['key'] = cr_key
         cr_data['date'] = str(start_time.date())
@@ -62,6 +63,8 @@ def times():
         if stop_time:
             cr_data['stop_time'] = str(stop_time.time())
             cr_data['duration'] = str(stop_time - start_time)
+        if error:
+            cr_data['duration'] = error
         data.append(cr_data)
     print(data)
     return render_template('index.html', **locals())
