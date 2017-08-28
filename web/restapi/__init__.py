@@ -16,6 +16,19 @@ cache = redis.StrictRedis(
     port = "6379",
 )
 
+def help_decorator(f):
+    """
+    Returns the function info
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "/help" in request.path:
+            return f.__doc__
+        return f(*args, **kwargs)
+    return decorated_function
+
+app.debug = True
+
 @app.route('/')
 def index():
     f = open("README.md","r")
@@ -23,7 +36,8 @@ def index():
     return render_template('index.html', **locals())
 
 
-@app.route('/times')
+@app.route('/times'
+           '')
 def index():
     scrapper_keys = cache.keys('Counter/Scrapper*Total')
     for key in scrapper_keys:
