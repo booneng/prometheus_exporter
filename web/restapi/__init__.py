@@ -50,6 +50,9 @@ def collect():
                 data['start_time'] = old_start_time
                 data['stop_time'] = current_time
         country_retailers[country_retailer] = data
+    cache.set('scrapper_time_metrics', country_retailers)
+    
+    
     #pickle.dump(country_retailers, open(country_retailers_pickle_path, "wb" ))  
     
 def help_decorator(f):
