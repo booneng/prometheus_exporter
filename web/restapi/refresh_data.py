@@ -8,7 +8,7 @@ cache = redis.StrictRedis(
     host = "10.148.0.4",
     port = "6379",
 )
-country_retailers_pickle_path = '/usr/src/app/web/static/country_retailers.p'
+country_retailers_pickle_path = '/home/booneng/prometheus_exporter/web/restapi/country_retailers.p'
 
 try:
     country_retailers = pickle.load(open(country_retailers_pickle_path, "rb"))
