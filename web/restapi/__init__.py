@@ -8,8 +8,6 @@ from flask import Markup
 import markdown
 from flask import render_template
 import redis
-import atexit
-from apscheduler.scheduler import Scheduler
 import datetime
 
 app = Flask(__name__)
@@ -20,14 +18,6 @@ cache = redis.StrictRedis(
 )
 
 country_retailers = {}
-
-cron = Scheduler(daemon=True)
-# Explicitly kick off the background thread
-cron.start()
-
-@cron.interval_schedule(hours=1)
-def refresh_counters():
-    pass
 
 def help_decorator(f):
     """
