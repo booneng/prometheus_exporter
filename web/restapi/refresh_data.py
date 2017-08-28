@@ -42,4 +42,5 @@ def collect():
     
 while(True):
     collect()
+    print('YES')
     time.sleep(50)
