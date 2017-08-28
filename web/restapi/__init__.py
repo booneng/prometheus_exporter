@@ -53,7 +53,6 @@ def f():
                 data['stop_time'] = current_time
         country_retailers[country_retailer] = data
     pickle.dump(country_retailers, open(country_retailers_pickle_path, "wb" ))  
-    time.sleep(20)        
     threading.Timer(60, f).start()
     
 f()
