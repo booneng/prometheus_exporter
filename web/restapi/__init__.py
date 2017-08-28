@@ -9,7 +9,7 @@ import markdown
 from flask import render_template
 import redis
 import datetime
-import cPickle as picke
+import cPickle as pickle
 
 app = Flask(__name__)
 
