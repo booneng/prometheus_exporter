@@ -11,7 +11,7 @@ cache = redis.StrictRedis(
 )
     
 def collect():
-    country_retailers = {}
+    country_retailers = loads(cache.get('scrapper_time_metrics').decode('utf-8'))
     scrapper_keys = cache.keys('Counter/Scrapper*Total')
     for key in scrapper_keys:
         data = {}

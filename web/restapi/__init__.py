@@ -46,7 +46,7 @@ def index():
 @app.route('/times'
            '')
 def times():
-    country_retailers = loads(cache.get('scrapper_time_metrics'))
+    country_retailers = loads(cache.get('scrapper_time_metrics').decode('utf-8'))
     data = []
     for cr_key in country_retailers:
         country_retailer = country_retailers[cr_key]
