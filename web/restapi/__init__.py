@@ -12,7 +12,7 @@ import redis
 app = Flask(__name__)
 
 cache = redis.StrictRedis(
-    host = "redis.shopprapp.io",
+    host = "10.148.0.4",
     port = "6379",
 )
 
