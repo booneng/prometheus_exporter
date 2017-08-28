@@ -4,6 +4,25 @@
     <link rel="stylesheet" href="/static/css/defaults.css" type="text/css">
   </head>
   <body>
-    {{ content }}
+    <table border=2>    
+    <tr>
+    <td>    
+        Key
+    </td>   
+    <td>
+        Value
+    </td>
+    </tr>
+    {% for lis1 in country_retailers %}
+    <tr>
+    <td>
+        <h3>{{lis1}}</h3>
+    </td>
+    <td>
+        <h3>{{country_retailers[lis1]}}</h3>
+    </td>
+    </tr>
+    {% endfor %}
+    </table>
   </body>
 </html>
