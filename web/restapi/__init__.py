@@ -38,7 +38,7 @@ def index():
 
 @app.route('/times'
            '')
-def index():
+def times():
     scrapper_keys = cache.keys('Counter/Scrapper*Total')
     for key in scrapper_keys:
         country_retailer = re.findall(r'Counter/Scrapper(.*?)/Total', str(key))[0]
