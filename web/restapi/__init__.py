@@ -7,6 +7,7 @@ import re
 from flask import Markup
 import markdown
 from flask import render_template
+import redis
 
 app = Flask(__name__)
 
@@ -21,3 +22,10 @@ def index():
     content = Markup(markdown.markdown(f.read()))
     return render_template('index.html', **locals())
 
+
+@app.route('/times')
+def index():
+    scrapper_keys = cache.keys('Counter/Scrapper*Total')    
+    f = open("README.md","r")
+    content = Markup(markdown.markdown(f.read()))
+    return render_template('index.html', **locals())
