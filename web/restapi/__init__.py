@@ -22,7 +22,7 @@ cache = redis.StrictRedis(
     port = "6379",
 )
 
-def f():
+def collect():
     try:
         country_retailers = pickle.load(open(country_retailers_pickle_path, "rb"))
     except (OSError, IOError) as e: 
@@ -41,7 +41,6 @@ def f():
             country_retailers[country_retailer] = data
             continue
         old_data = country_retailers[country_retailer]
-        print(country_retailer)
         old_count = old_data['count']
         old_start_time = old_data['start_time']
         old_stop_time = old_data['stop_time']
@@ -54,10 +53,8 @@ def f():
                 data['stop_time'] = current_time
         country_retailers[country_retailer] = data
     pickle.dump(country_retailers, open(country_retailers_pickle_path, "wb" ))  
-    threading.Timer(60, f).start()
     
-f()
-
+collect()
 def help_decorator(f):
     """
     Returns the function info
