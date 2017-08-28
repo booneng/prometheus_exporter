@@ -7,19 +7,37 @@
     <table border=2>    
     <tr>
     <td>    
-        Key
+        Country_retailer
     </td>   
     <td>
-        Value
+        Date
+    </td>
+    <td>
+        Start
+    </td>
+    <td>
+        Stop
+    </td>
+    <td>
+        Duration
     </td>
     </tr>
-    {% for lis1 in country_retailers %}
+    {% for country_retailer in country_retailers %}
     <tr>
     <td>
-        <h3>{{lis1}}</h3>
+        <h3>{{country_retailer['key']}}</h3>
     </td>
     <td>
-        <h3>{{country_retailers[lis1]}}</h3>
+        <h3>{{country_retailer['date']}}</h3>
+    </td>
+    <td>
+        <h3>{{country_retailer['start']}}</h3>
+    </td>
+    <td>
+        <h3>{{country_retailer['stop']}}</h3>
+    </td>
+    <td>
+        <h3>{{country_retailer['duration']}}</h3>
     </td>
     </tr>
     {% endfor %}
