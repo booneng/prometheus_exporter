@@ -3,6 +3,7 @@ import redis
 import datetime
 import pickle
 import time
+import json
 
 cache = redis.StrictRedis(
     host = "10.148.0.4",
