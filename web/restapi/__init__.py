@@ -9,6 +9,7 @@ import markdown
 from flask import render_template
 import redis
 import datetime
+from datetime import timedelta
 import pickle
 
 app = Flask(__name__)
@@ -48,4 +49,13 @@ def times():
         country_retailers = pickle.load(open(country_retailers_pickle_path, "rb"))
     except (OSError, IOError) as e:
         country_retailers = {}
+    start_time = country_retailers['start_time']
+    stop_time = country_retailers['stop_time']
+    data = {}
+    data['date'] = str(start_time.date())
+    data['start_time'] = str(start_time.time())
+    if stop_time:
+        data['stop_time'] = str(stop_time.time())
+        data['duration'] = str(stop_time - start_time)
+    
     return render_template('index.html', **locals())
