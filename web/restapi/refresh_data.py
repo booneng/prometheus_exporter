@@ -1,7 +1,4 @@
-from random import randint
 import re
-from flask import Markup
-import markdown
 import redis
 import datetime
 
