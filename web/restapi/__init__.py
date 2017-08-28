@@ -16,6 +16,8 @@ cache = redis.StrictRedis(
     port = "6379",
 )
 
+country_retailers = {}
+
 def help_decorator(f):
     """
     Returns the function info
@@ -43,4 +45,5 @@ def times():
     for key in scrapper_keys:
         country_retailer = re.findall(r'Counter/Scrapper(.*?)/Total', str(key))[0]
         count = int(cache.get(key))
-    return {}
+        country_retailers[country_retailer] = count
+    return jsonify(country_retailers)
