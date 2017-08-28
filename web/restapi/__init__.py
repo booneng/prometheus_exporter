@@ -12,7 +12,7 @@ import redis
 app = Flask(__name__)
 
 cache = redis.StrictRedis(
-    host = "redisp.shopprapp.io",
+    host = "redis.shopprapp.io",
     port = "6379",
 )
 
@@ -25,7 +25,8 @@ def index():
 
 @app.route('/times')
 def index():
-    scrapper_keys = cache.keys('Counter/Scrapper*Total')    
-    f = open("README.md","r")
-    content = Markup(markdown.markdown(f.read()))
-    return render_template('index.html', **locals())
+    scrapper_keys = cache.keys('Counter/Scrapper*Total')
+    for key in scrapper_keys:
+        country_retailer = re.findall(r'Counter/Scrapper(.*?)/Total', str(key))[0]
+        count = int(cache.get(key))
+    return {}
