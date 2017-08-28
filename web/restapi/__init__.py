@@ -62,5 +62,5 @@ def times():
             cr_data['stop_time'] = str(stop_time.time())
             cr_data['duration'] = str(stop_time - start_time)
         data.append(cr_data)
-    
+    print(data)
     return render_template('index.html', **locals())
