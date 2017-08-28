@@ -38,7 +38,7 @@ def index():
     #f = open("README.md","r")
     #content = Markup(markdown.markdown(f.read()))
     country_retailers = {'date':'hi'}
-    data = [country_retailers]
+    data = [country_retailers, country_retailers]
     return render_template('index.html', **locals())
 
 
