@@ -49,7 +49,7 @@ def times():
     try:
         country_retailers = pickle.load(open(country_retailers_pickle_path, "rb"))
     except (OSError, IOError) as e:
-        country_retailers = {}
+        country_retailers = {'test':{'start_time': datetime.datetime.now()}}
     data = []
     for cr_key in country_retailers:
         country_retailer = country_retailers[cr_key]
