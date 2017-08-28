@@ -17,7 +17,7 @@ def collect():
         data = {}
         country_retailer = re.findall(r'Counter/Scrapper(.*?)/Total', str(key))[0]
         count = int(cache.get(key))
-        current_time = datetime.datetime.now()
+        current_time = str(datetime.datetime.now())
         data['count'] = count
         if country_retailer not in country_retailers:
             data['start_time'] = current_time
@@ -38,6 +38,7 @@ def collect():
                 data['stop_time'] = current_time
         country_retailers[country_retailer] = data
     cache.set('scrapper_time_metrics', json.dumps(country_retailers))
+   
     
 while(True):
     collect()
