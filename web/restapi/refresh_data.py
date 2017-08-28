@@ -1,7 +1,7 @@
 import re
 import redis
 import datetime
-import cPickle as pickle
+import pickle
 import time
 
 cache = redis.StrictRedis(
