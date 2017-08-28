@@ -41,6 +41,7 @@ def f():
             country_retailers[country_retailer] = data
             continue
         old_data = country_retailers[country_retailer]
+        print(country_retailer)
         old_count = old_data['count']
         old_start_time = old_data['start_time']
         old_stop_time = old_data['stop_time']
