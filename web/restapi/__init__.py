@@ -13,7 +13,7 @@ from datetime import timedelta
 import pickle
 import threading
 
-country_retailers_pickle_path = '/usr/src/app/web/static/country_retailers.p'
+#country_retailers_pickle_path = '/usr/src/app/web/static/country_retailers.p'
 
 app = Flask(__name__)
 
@@ -22,11 +22,9 @@ cache = redis.StrictRedis(
     port = "6379",
 )
 
+country_retailers = {}
+
 def collect():
-    try:
-        country_retailers = pickle.load(open(country_retailers_pickle_path, "rb"))
-    except (OSError, IOError) as e: 
-        country_retailers = {}
     scrapper_keys = cache.keys('Counter/Scrapper*Total')
     for key in scrapper_keys:
         data = {}
@@ -42,8 +40,8 @@ def collect():
             continue
         old_data = country_retailers[country_retailer]
         old_count = old_data['count']
-        old_start_time = old_data.get('start_time', None)
-        old_stop_time = old_data.get('start_time', None)
+        old_start_time = old_data['start_time']
+        old_stop_time = old_data['stop_time']
         if count < old_count:
             data['start_time'] = current_time
             data['stop_time'] = None
@@ -52,9 +50,8 @@ def collect():
                 data['start_time'] = old_start_time
                 data['stop_time'] = current_time
         country_retailers[country_retailer] = data
-    pickle.dump(country_retailers, open(country_retailers_pickle_path, "wb" ))  
+    #pickle.dump(country_retailers, open(country_retailers_pickle_path, "wb" ))  
     
-collect()
 def help_decorator(f):
     """
     Returns the function info
@@ -79,11 +76,11 @@ def index():
 @app.route('/times'
            '')
 def times():
-    country_retailers_pickle_path = '/usr/src/app/web/static/country_retailers.p'    
-    try:
-        country_retailers = pickle.load(open(country_retailers_pickle_path, "rb"))
-    except (OSError, IOError) as e:
-        country_retailers = {'test':{'start_time': datetime.datetime.now(), 'error': e}}
+    #country_retailers_pickle_path = '/usr/src/app/web/static/country_retailers.p'    
+    #try:
+        #country_retailers = pickle.load(open(country_retailers_pickle_path, "rb"))
+    #except (OSError, IOError) as e:
+        #country_retailers = {'test':{'start_time': datetime.datetime.now(), 'error': e}}
     data = []
     for cr_key in country_retailers:
         country_retailer = country_retailers[cr_key]
