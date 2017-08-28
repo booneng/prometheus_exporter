@@ -1,6 +1,7 @@
 import re
 import redis
 import datetime
+import cPickle as picke
 
 cache = redis.StrictRedis(
     host = "10.148.0.4",
