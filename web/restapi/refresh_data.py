@@ -32,10 +32,13 @@ def collect():
         if count < old_count:
             data['start_time'] = current_time
             data['stop_time'] = None
-        elif old_stop_time == None:
-            if count == old_count:
-                data['start_time'] = old_start_time
-                data['stop_time'] = current_time
+        elif count > old_count:
+            data['start_time'] = old_start_time
+            data['stop_time'] = None
+        else:
+            data['start_time'] = old_start_time
+            data['stop_time'] = old_stop_time if old_stop_time else None
+                
         country_retailers[country_retailer] = data
     cache.set('scrapper_time_metrics', json.dumps(country_retailers))
    
