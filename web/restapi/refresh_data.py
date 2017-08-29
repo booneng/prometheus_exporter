@@ -43,7 +43,7 @@ def collect():
             data['stop_time'] = None
         else:
             data['start_time'] = old_start_time
-            data['stop_time'] = old_stop_time if old_stop_time else None
+            data['stop_time'] = old_stop_time if old_stop_time else current_time
                 
         country_retailers[country_retailer] = data
     cache.set('scrapper_time_metrics', json.dumps(country_retailers))
