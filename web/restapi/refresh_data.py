@@ -4,6 +4,7 @@ import datetime
 import pickle
 import time
 import json
+from pytz import timezone
 
 cache = redis.StrictRedis(
     host = "10.148.0.4",
@@ -11,13 +12,18 @@ cache = redis.StrictRedis(
 )
     
 def collect():
-    country_retailers = json.loads(cache.get('scrapper_time_metrics').decode('utf-8'))
+    redis_value = cache.get('scrapper_time_metrics')
+    if redis_value:
+        country_retailers = json.loads(redis_value.decode('utf-8'))
+    else:
+        country_retailers = {}
     scrapper_keys = cache.keys('Counter/Scrapper*Total')
     for key in scrapper_keys:
         data = {}
         country_retailer = re.findall(r'Counter/Scrapper(.*?)/Total', str(key))[0]
         count = int(cache.get(key))
-        current_time = str(datetime.datetime.now())
+        tz = timezone('Asia/Singapore')
+        current_time = str(datetime.datetime.now(tz))
         data['count'] = count
         if country_retailer not in country_retailers:
             data['start_time'] = current_time
