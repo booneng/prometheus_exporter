@@ -23,7 +23,7 @@ def collect():
         country_retailer = re.findall(r'Counter/Scrapper(.*?)/Total', str(key))[0]
         count = int(cache.get(key))
         tz = timezone('Asia/Singapore')
-        current_time = str(datetime.datetime.now(tz))
+        current_time = str(datetime.datetime.now(tz))[0:19]
         data['count'] = count
         if country_retailer not in country_retailers:
             data['start_time'] = current_time

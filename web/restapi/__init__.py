@@ -41,7 +41,7 @@ def times():
     data = []
     for cr_key in country_retailers:
         country_retailer = country_retailers[cr_key]
-        start_time = datetime.datetime.strptime(country_retailer['start_time'], "%Y-%m-%d %H:%M:%S.%f")
+        start_time = datetime.datetime.strptime(country_retailer['start_time'], "%Y-%m-%d %H:%M:%S")
         stop_time = country_retailer.get('stop_time', None)          
         error = country_retailer.get('error', None)
         cr_data = {}   
@@ -49,7 +49,7 @@ def times():
         cr_data['date'] = str(start_time.date())
         cr_data['start_time'] = str(start_time.time())
         if stop_time:
-            stop_time = datetime.datetime.strptime(country_retailer['stop_time'], "%Y-%m-%d %H:%M:%S.%f")
+            stop_time = datetime.datetime.strptime(country_retailer['stop_time'], "%Y-%m-%d %H:%M:%S")
             cr_data['stop_time'] = str(stop_time.time())
             cr_data['duration'] = str(stop_time - start_time)
         if error:
