@@ -55,4 +55,4 @@ def times():
         if error:
             cr_data['duration'] = error
         data.append(cr_data)
-    return render_template('index.html', **locals())
+    return render_template('index2.html', **locals())
