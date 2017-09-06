@@ -46,8 +46,6 @@ def times():
         country_retailer = country_retailers[cr_key]
         start_time = datetime.datetime.strptime(country_retailer['start_time'], "%Y-%m-%d %H:%M:%S")
         stop_time = country_retailer.get('stop_time', None)
-        tz = timezone('Asia/Singapore')
-        todays_date = datetime.datetime.now(tz).date()
         error = country_retailer.get('error', None)
         cr_data = {}
         cr_data['key'] = cr_key
@@ -56,8 +54,12 @@ def times():
         if stop_time:
             stop_time = datetime.datetime.strptime(country_retailer['stop_time'], "%Y-%m-%d %H:%M:%S")
             cr_data['stop_time'] = str(stop_time.time())
-            cr_data['duration'] = str(stop_time - start_time)        
-        if todays_date == start_time.date():
+            cr_data['duration'] = str(stop_time - start_time)
+
+        tz = timezone('Asia/Singapore')
+        current_time = datetime.datetime.strptime(str(datetime.datetime.now(tz))[0:19], "%Y-%m-%d %H:%M:%S")
+        delta_days = (current_time - start_time).days
+        if delta_days > 0:
             if stop_time:
                 finished_today.append(cr_data)
             else:
@@ -65,24 +67,3 @@ def times():
         else:
             has_not_started_today.append(cr_data)
     return render_template('index2.html', **locals())
-
-#def times():
-    #country_retailers = loads(cache.get('scrapper_time_metrics').decode('utf-8'))
-    #data = []
-    #for cr_key in country_retailers:
-        #country_retailer = country_retailers[cr_key]
-        #start_time = datetime.datetime.strptime(country_retailer['start_time'], "%Y-%m-%d %H:%M:%S")
-        #stop_time = country_retailer.get('stop_time', None)          
-        #error = country_retailer.get('error', None)
-        #cr_data = {}   
-        #cr_data['key'] = cr_key
-        #cr_data['date'] = str(start_time.date())
-        #cr_data['start_time'] = str(start_time.time())
-        #if stop_time:
-            #stop_time = datetime.datetime.strptime(country_retailer['stop_time'], "%Y-%m-%d %H:%M:%S")
-            #cr_data['stop_time'] = str(stop_time.time())
-            #cr_data['duration'] = str(stop_time - start_time)
-        #if error:
-            #cr_data['duration'] = error
-        #data.append(cr_data)
-    #return render_template('index2.html', **locals())
