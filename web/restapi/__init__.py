@@ -59,7 +59,7 @@ def times():
         tz = timezone('Asia/Singapore')
         current_time = datetime.datetime.strptime(str(datetime.datetime.now(tz))[0:19], "%Y-%m-%d %H:%M:%S")
         delta_days = (current_time - start_time).days
-        if delta_days > 0:
+        if delta_days == 0:
             if stop_time:
                 finished_today.append(cr_data)
             else:
