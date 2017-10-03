@@ -48,7 +48,6 @@ def times():
         cr_data['key'] = cr_key
         start_time = country_retailer.get('start_time', None)
         if start_time is None:
-            print(country_retailer)
             has_not_started_today.append(cr_data)
             continue
         start_time = datetime.datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
@@ -64,7 +63,7 @@ def times():
         tz = timezone('Asia/Singapore')
         current_time = datetime.datetime.strptime(str(datetime.datetime.now(tz))[0:19], "%Y-%m-%d %H:%M:%S")
         delta_days = (current_time - start_time).days
-        if delta_days > 0:
+        if delta_days < 1:
             if stop_time:
                 finished_today.append(cr_data)
             else:
