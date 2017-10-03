@@ -71,4 +71,4 @@ def times():
                 still_running_today.append(cr_data)
         else:
             has_not_started_today.append(cr_data)
-    return render_template('index2.html', **locals())
+    return render_template('index.html', **locals())
