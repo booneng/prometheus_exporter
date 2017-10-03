@@ -44,11 +44,15 @@ def times():
     has_not_started_today = []
     for cr_key in country_retailers:
         country_retailer = country_retailers[cr_key]
-        start_time = datetime.datetime.strptime(country_retailer['start_time'], "%Y-%m-%d %H:%M:%S")
-        stop_time = country_retailer.get('stop_time', None)
-        error = country_retailer.get('error', None)
         cr_data = {}
         cr_data['key'] = cr_key
+        start_time = country_retailer.get('start_time', None)
+        if start_time is None:
+            has_not_started_today.append(cr_data)
+            continue
+        start_time = datetime.datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
+        stop_time = country_retailer.get('stop_time', None)
+        error = country_retailer.get('error', None)
         cr_data['date'] = str(start_time.date())
         cr_data['start_time'] = str(start_time.time())
         if stop_time:
