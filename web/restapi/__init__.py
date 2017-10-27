@@ -16,11 +16,6 @@ from pytz import timezone
 #country_retailers_pickle_path = '/usr/src/app/web/static/country_retailers.p'
 
 app = Flask(__name__)
-
-cache = redis.StrictRedis(
-    host = "10.148.0.4",
-    port = "6379",
-)
     
 def help_decorator(f):
     """
@@ -37,6 +32,10 @@ app.debug = True
 
 @app.route('/production')
 def times():
+    cache = redis.StrictRedis(
+        host = "10.148.0.4",
+        port = "6379",
+    )    
     country_retailers = loads(cache.get('scrapper_time_metrics').decode('utf-8'))
     finished_today = []
     still_running_today = []
@@ -73,6 +72,10 @@ def times():
 
 @app.route('/staging')
 def times_staging():
+    cache = redis.StrictRedis(
+        host = "10.148.0.2",
+        port = "6379",
+    )    
     country_retailers = loads(cache.get('scrapper_time_metrics_demo').decode('utf-8'))
     finished_today = []
     still_running_today = []
