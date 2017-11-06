@@ -30,13 +30,14 @@ def help_decorator(f):
 
 app.debug = True
 
+TIME_METRICS = 'scrapper_time_metrics'
 @app.route('/production')
 def times():
     cache = redis.StrictRedis(
         host = "10.148.0.4",
         port = "6379",
     )    
-    country_retailers = loads(cache.get('scrapper_time_metrics').decode('utf-8'))
+    country_retailers = loads(cache.get(TIME_METRICS).decode('utf-8'))
     finished_today = []
     still_running_today = []
     has_not_started_today = []
@@ -76,7 +77,7 @@ def times_staging():
         host = "10.148.0.2",
         port = "6379",
     )    
-    country_retailers = loads(cache.get('scrapper_time_metrics_demo').decode('utf-8'))
+    country_retailers = loads(cache.get(TIME_METRICS).decode('utf-8'))
     finished_today = []
     still_running_today = []
     has_not_started_today = []
